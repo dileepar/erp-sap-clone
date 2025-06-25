@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Since we use Windows 11 Operating system, only execute powershell commands when using commands.

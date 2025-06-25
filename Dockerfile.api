@@ -1,0 +1,61 @@
+# SAP Clone API Dockerfile (.NET 9)
+# Multi-stage build for optimized production image
+
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+WORKDIR /src
+
+# Copy project files and restore dependencies
+COPY ["src/API/SAP.API/SAP.API.csproj", "src/API/SAP.API/"]
+COPY ["src/Core/SAP.Core.Domain/SAP.Core.Domain.csproj", "src/Core/SAP.Core.Domain/"]
+COPY ["src/Core/SAP.Core.Application/SAP.Core.Application.csproj", "src/Core/SAP.Core.Application/"]
+COPY ["src/Core/SAP.Core.Contracts/SAP.Core.Contracts.csproj", "src/Core/SAP.Core.Contracts/"]
+COPY ["src/Infrastructure/SAP.Infrastructure.Data/SAP.Infrastructure.Data.csproj", "src/Infrastructure/SAP.Infrastructure.Data/"]
+COPY ["src/Infrastructure/SAP.Infrastructure.Messaging/SAP.Infrastructure.Messaging.csproj", "src/Infrastructure/SAP.Infrastructure.Messaging/"]
+COPY ["SAP-Clone.sln", "./"]
+
+RUN dotnet restore "src/API/SAP.API/SAP.API.csproj"
+
+# Copy source code and build
+COPY . .
+WORKDIR /src/src/API/SAP.API
+RUN dotnet build "SAP.API.csproj" -c Release -o /app/build
+
+# Publish stage
+FROM build AS publish
+RUN dotnet publish "SAP.API.csproj" -c Release -o /app/publish \
+    --no-restore \
+    --self-contained false \
+    /p:TieredPGO=true \
+    /p:PublishTrimmed=false
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS runtime
+WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -S appuser -u 1001 -G appgroup
+
+# Install curl for health checks
+RUN apk add --no-cache curl
+
+# Copy published app
+COPY --from=publish /app/publish .
+
+# Set ownership and permissions
+RUN chown -R appuser:appgroup /app
+USER appuser
+
+# Configure ASP.NET Core
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_HTTP_PORTS=8080
+
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["dotnet", "SAP.API.dll"] 
