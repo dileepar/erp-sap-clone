@@ -1,4 +1,4 @@
-                            `````````````````````````````````````````````````````````````````````````````s{
+{
   "name": "sap-clone-infrastructure",
   "version": "1.0.0",
   "description": "AWS CDK Infrastructure for SAP Clone ERP",
