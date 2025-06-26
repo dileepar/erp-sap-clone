@@ -16,7 +16,7 @@
 ```xml
 <PropertyGroup>
   <TieredPGO>true</TieredPGO>
-  <PublishAot>true</PublishAot>
+  <!-- PublishAot removed - TieredPGO provides better performance for ERP scenarios -->
 </PropertyGroup>
 ```
 
@@ -34,7 +34,7 @@ dotnet add package Wolverine.Marten --version 3.0.0
 - **TanStack Router**: v1 (type-safe file-based routing)
 - **TanStack Query**: v5 (advanced data fetching and caching)
 - **TanStack Table**: v8.21+ (high-performance data tables)
-- **TanStack Start**: Beta (full-stack React framework)
+- **Vite**: Lightning-fast build tool (production-ready alternative to TanStack Start Beta)
 - **TanStack Form**: Latest (type-safe form management)
 
 ### Key Benefits

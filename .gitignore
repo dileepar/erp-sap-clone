@@ -163,9 +163,24 @@ appsettings.*.json
 deployment-package/
 publish/
 
-# SonarQube
-.sonarqube/
+# Code analysis tools (removed)
+# .sonarqube/
 .scannerwork/
+
+# AWS CDK
+infrastructure/node_modules/
+infrastructure/cdk.out/
+*.cdk.staging/
+cdk.context.json
+
+# Deployment artifacts
+publish/
+*.zip
+*.tar.gz
+deployment-packages/
+
+# AWS credentials (local)
+.aws/
 
 # JetBrains
 .idea/

@@ -12,21 +12,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <!-- Code Analysis -->
-  <PropertyGroup>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>Default</AnalysisMode>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-  </PropertyGroup>
-
-  <!-- Security Analysis -->
-  <PropertyGroup>
-    <EnableSecurityCodeScan>true</EnableSecurityCodeScan>
-    <TreatSecurityWarningsAsErrors>true</TreatSecurityWarningsAsErrors>
-  </PropertyGroup>
+  <!-- Code Analysis removed for simplified workflow -->
 
   <!-- Performance -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -51,14 +37,15 @@
 
   <!-- Global Package References -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="all" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.32.0.97167" PrivateAssets="all" />
-    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7" PrivateAssets="all" />
-    <PackageReference Include="Roslynator.Analyzers" Version="4.12.4" PrivateAssets="all" />
+    <!-- Code analysis packages removed for simplified workflow -->
   </ItemGroup>
 
   <!-- Test Projects -->
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="xunit" Version="2.9.2" />

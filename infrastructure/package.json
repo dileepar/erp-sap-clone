@@ -1,0 +1,27 @@
+                            `````````````````````````````````````````````````````````````````````````````s{
+  "name": "sap-clone-infrastructure",
+  "version": "1.0.0",
+  "description": "AWS CDK Infrastructure for SAP Clone ERP",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "deploy": "cdk deploy --all",
+    "diff": "cdk diff --all",
+    "synth": "cdk synth --all",
+    "destroy": "cdk destroy --all"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "aws-cdk": "2.166.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "~5.8.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.166.0",
+    "constructs": "^10.3.0"
+  }
+} 

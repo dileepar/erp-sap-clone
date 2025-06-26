@@ -59,11 +59,12 @@ function Kill-DevProcesses {
 }
 
 function Start-Backend {
-    Write-Info "Starting .NET Backend API on https://localhost:7000"
+    Write-Info "Starting .NET Backend API on https://localhost:7099 (HTTP: 5083)"
     
-    Push-Location "src\API\SAP.API"
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "dotnet watch run --urls=https://localhost:7000"
-    Pop-Location
+    $backendPath = Join-Path $PWD "src\API\SAP.API"
+    $command = "cd '$backendPath'; dotnet watch run; Read-Host 'Press Enter to close'"
+    
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoExit", "-Command", $command
     
     Write-Info "Backend started in new window"
 }
@@ -71,9 +72,10 @@ function Start-Backend {
 function Start-Frontend {
     Write-Info "Starting React Frontend on http://localhost:3000"
     
-    Push-Location "src\Web\sap-web"
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "bun run dev"
-    Pop-Location
+    $frontendPath = Join-Path $PWD "src\Web\sap-web"
+    $command = "cd '$frontendPath'; bun run dev; Read-Host 'Press Enter to close'"
+    
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoExit", "-Command", $command
     
     Write-Info "Frontend started in new window"
 }
@@ -113,7 +115,13 @@ if ($BackendOnly) {
 
 Write-Host ""
 Write-Info "Development servers are running!"
-Write-Host "Backend API:  https://localhost:7000" -ForegroundColor Yellow
+Write-Host "Backend API:  https://localhost:7099 (HTTP: 5083)" -ForegroundColor Yellow
 Write-Host "Frontend:     http://localhost:3000" -ForegroundColor Yellow
-Write-Host "Press any key to exit..."
+Write-Host ""
+Write-Info "Frontend configured to connect to backend on port 5083"
+Write-Host ""
+Write-Info "New PowerShell windows opened for each service"
+Write-Host "Close the windows or press Ctrl+C in them to stop services"
+Write-Host ""
+Write-Host "Press any key to exit this script..."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown") 

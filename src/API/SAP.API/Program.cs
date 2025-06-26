@@ -1,25 +1,43 @@
 using Marten;
 using SAP.API.Models;
+using SAP.Infrastructure.Data;
+using Wolverine;
+using SAP.Core.Application.Financial.Commands;
+using SAP.Core.Application.Financial.Queries;
+using SAP.Core.Application.Financial.Services;
+using SAP.Core.Application.Financial.EventHandlers;
+using SAP.Core.Domain.Financial.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Configure Marten with PostgreSQL
-builder.Services.AddMarten(options =>
+builder.Services.AddSwaggerGen(options =>
 {
-    // Connection string - will use environment variable or appsettings
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-        ?? "Host=localhost;Database=sapclone;Username=sapuser;Password=sappassword";
-    
-    options.Connection(connectionString);
-    
-    // Configure document mappings
-    options.Schema.For<Employee>();
+    options.SwaggerDoc("v1", new() 
+    { 
+        Title = "SAP Clone Financial Management API", 
+        Version = "v1",
+        Description = "REST API for SAP Clone Financial Management operations including Chart of Accounts and Journal Entries"
+    });
 });
+
+// Add Infrastructure Data Services (includes Marten configuration)
+builder.Services.AddInfrastructureData(builder.Configuration);
+
+// Add Wolverine for CQRS messaging
+builder.Host.UseWolverine(opts =>
+{
+    // Auto-discover handlers in Application layer
+    opts.Discovery.IncludeAssembly(typeof(CreateAccountHandler).Assembly);
+    
+    // Configure logging
+    opts.Services.AddLogging();
+});
+
+// Register Application Services
+builder.Services.AddScoped<IChartOfAccountsService, ChartOfAccountsService>();
 
 // Add CORS for React frontend
 builder.Services.AddCors(options =>
@@ -52,3 +70,6 @@ app.MapGet("/", () => "SAP Clone API is running!");
 app.MapGet("/health", () => new { status = "healthy", timestamp = DateTime.UtcNow });
 
 app.Run();
+
+// Make Program class accessible for testing
+public partial class Program { }
