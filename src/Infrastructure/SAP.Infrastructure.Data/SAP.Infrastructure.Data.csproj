@@ -8,6 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Marten" Version="8.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+    <PackageReference Include="Npgsql" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\SAP.Core.Domain\SAP.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\SAP.Core.Contracts\SAP.Core.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

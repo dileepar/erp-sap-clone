@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="WolverineFx" Version="4.4.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SAP.Core.Domain\SAP.Core.Domain.csproj" />
+    <ProjectReference Include="..\SAP.Core.Contracts\SAP.Core.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

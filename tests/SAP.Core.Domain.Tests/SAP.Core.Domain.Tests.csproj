@@ -4,10 +4,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SAP.Core.Domain\SAP.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Domain\SAP.Core.Domain.csproj" />
   </ItemGroup>
 
 </Project>

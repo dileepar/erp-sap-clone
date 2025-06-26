@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Application\SAP.Core.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Domain\SAP.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Contracts\SAP.Core.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

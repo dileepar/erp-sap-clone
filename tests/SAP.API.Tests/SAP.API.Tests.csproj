@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <StartupObject>SAP.API.Tests.TestRunner</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.6" />
+    <PackageReference Include="Testcontainers" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\API\SAP.API\SAP.API.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Application\SAP.Core.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Contracts\SAP.Core.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Core\SAP.Core.Domain\SAP.Core.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\SAP.Infrastructure.Data\SAP.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
+</Project> 
